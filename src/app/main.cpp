@@ -4,6 +4,7 @@
 
 #include <boost/format.hpp>
 
+#include <FileSplitter.h>
 #include <StringConverter.hpp>
 
 const char *const USAGE_MESSAGE = "Usage: mapreduce <src> <mnum> <rnum>";
@@ -44,6 +45,8 @@ int main(int argc, char *argv[])
 		std::cout << (boost::format { RANGE_ERROR_MESSAGE } % "rnum") << std::endl;
 		return EXIT_FAILURE;
 	}
+
+	auto parts = FileSplitter::split(srcPath, 3);
 
 
 
