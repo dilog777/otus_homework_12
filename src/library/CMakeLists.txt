@@ -1,4 +1,4 @@
-project(helloworld_lib VERSION ${PROJECT_VERSION})
+project(mapreduce_lib VERSION ${PROJECT_VERSION})
 
 file(GLOB_RECURSE SRC *.h *.hpp *.cpp)
 
