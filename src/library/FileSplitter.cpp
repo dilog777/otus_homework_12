@@ -39,7 +39,8 @@ std::vector<FileSplitter::FilePart> FileSplitter::split(const std::string &fileP
 		startPos = endPos;
 	}
 
-	result.push_back({ startPos, fileSize });
+	if (startPos < fileSize)
+		result.push_back({ startPos, fileSize });
 
 	file.close();
 
