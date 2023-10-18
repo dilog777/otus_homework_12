@@ -66,11 +66,10 @@ std::vector<std::string> MapReducer::map(std::uintmax_t startPos, std::uintmax_t
 	std::vector<std::string> result;
 
 	file.seekg(startPos);
-	while (file.tellg() < endPos)
+	while (static_cast<uint64_t>(file.tellg()) < endPos)
 	{
 		std::string line;
 		std::getline(file, line);
-
 		result.push_back(_mapFunctor(line));
 	}
 
