@@ -11,7 +11,7 @@ std::vector<FileSplitter::FilePart> FileSplitter::split(const std::string &fileP
 	assert(parts >= 0);
 	
 	std::error_code ec;
-	std::uintmax_t fileSize = std::filesystem::file_size(filePath, ec);
+	uint64_t fileSize = std::filesystem::file_size(filePath, ec);
 	if (ec)
 		return {};
 
@@ -22,11 +22,11 @@ std::vector<FileSplitter::FilePart> FileSplitter::split(const std::string &fileP
 	std::vector<FilePart> result;
 	result.reserve(parts);
 
-	std::uintmax_t startPos = 0;
-	std::uintmax_t blockSize = fileSize / parts;
+	uint64_t startPos = 0;
+	uint64_t blockSize = fileSize / parts;
 	for (int i = 1; i < parts; ++i)
 	{
-		std::uintmax_t endPos = blockSize * i;
+		uint64_t endPos = blockSize * i;
 		if (endPos <= startPos)
 			continue;
 
