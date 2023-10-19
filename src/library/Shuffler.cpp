@@ -21,7 +21,7 @@ Shuffler::Data Shuffler::shuffle(int newSize)
 	{
 		if (lastStr != nextStr)
 		{
-			idx = (++idx) % newSize;
+			idx = (idx + 1) % newSize;
 			lastStr = nextStr;
 		}
 		
@@ -60,8 +60,8 @@ bool Shuffler::readNextString(std::string &str)
 	int &stringIdx = _currentString[vectorIdx];
 	stringIdx++;
 
-	int stringSize = _sourceData[vectorIdx].size();
-	if (stringIdx >= stringSize)
+	size_t stringSize = _sourceData[vectorIdx].size();
+	if (stringIdx >= static_cast<int>(stringSize))
 		stringIdx = -1;
 
 	return true;
