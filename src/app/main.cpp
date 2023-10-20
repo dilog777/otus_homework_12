@@ -16,26 +16,6 @@ const char *const RESULT_FAILURE_MESSAGE = "Minimum length not found";
 
 
 
-int findMaxLength(const std::vector<std::string> &strings)
-{
-	if (strings.empty())
-		return 0;
-
-	auto strCompare = [](const std::string &str1, const std::string &str2)
-	{
-		return str1.length() < str2.length();
-	};
-
-	auto it = std::max_element(strings.begin(), strings.end(), strCompare);
-	size_t maxLength = (*it).length();
-	if (maxLength > INT_MAX)
-		return INT_MAX;
-
-	return static_cast<int>(maxLength);
-}
-
-
-
 int main(int argc, char *argv[])
 {
 	if (argc != 4)
@@ -75,6 +55,8 @@ int main(int argc, char *argv[])
 	mapReducer.setMapFunctor([&length](const std::string &str) { return str.substr(0, length); });
 	mapReducer.setReduceFunctor([](const std::vector<std::string> &strings) { return DuplicateSearcer::duplicates(strings); });
 
+	auto stringShorterLength = [&length](const std::string &str){ return (str.length() < length); };
+
 	while (length < INT_MAX)
 	{
 		auto duplicates = mapReducer.exec();
@@ -84,8 +66,8 @@ int main(int argc, char *argv[])
 			break;
 		}
 
-		int maxLength = findMaxLength(duplicates);
-		if (maxLength < length)
+		bool allStringsShorterLength = std::all_of(duplicates.begin(), duplicates.end(), stringShorterLength);
+		if (allStringsShorterLength)
 		{
 			std::cout << RESULT_FAILURE_MESSAGE << std::endl;
 			break;

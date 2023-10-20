@@ -53,8 +53,9 @@ std::vector<std::string> MapReducer::exec()
 	Shuffler shufler(mapResult);
 	auto shuffleResult = shufler.shuffle(_redusersCount);
 
-	int rnum = 0;
 	futures.clear();
+
+	int rnum = 0;
 	for (const auto &strings : shuffleResult)
 		futures.push_back(std::async(std::launch::async, &MapReducer::reduce, this, strings, ++rnum));
 

@@ -17,7 +17,7 @@ public:
 
 private:
 	const Data &_sourceData;
-	std::vector<int> _currentString;
+	std::vector<int> _stringIndexes;
 
 	bool readNextString(std::string &str);
 };

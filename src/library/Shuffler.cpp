@@ -12,20 +12,20 @@ Shuffler::Shuffler(const Data &data)
 Shuffler::Data Shuffler::shuffle(int newSize)
 {
 	Data result(newSize);
-	_currentString = std::vector<int>(_sourceData.size(), 0);
+	_stringIndexes = std::vector<int>(_sourceData.size(), 0);
 
-	int idx = -1;
+	int outputIdx = -1;
 	std::string lastStr;
 	std::string nextStr;
 	while (readNextString(nextStr))
 	{
 		if (lastStr != nextStr)
 		{
-			idx = (idx + 1) % newSize;
+			outputIdx = (outputIdx + 1) % newSize;
 			lastStr = nextStr;
 		}
 		
-		result[idx].push_back(nextStr);
+		result[outputIdx].push_back(nextStr);
 	}
 
 	return result;
@@ -40,7 +40,7 @@ bool Shuffler::readNextString(std::string &str)
 	int sourceSize = _sourceData.size();
 	for (int i = 0; i < sourceSize; ++i)
 	{
-		int stringIdx = _currentString[i];
+		int stringIdx = _stringIndexes[i];
 		if (stringIdx < 0)
 			continue;
 
@@ -57,7 +57,7 @@ bool Shuffler::readNextString(std::string &str)
 
 	str = result;
 
-	int &stringIdx = _currentString[vectorIdx];
+	int &stringIdx = _stringIndexes[vectorIdx];
 	stringIdx++;
 
 	size_t stringSize = _sourceData[vectorIdx].size();

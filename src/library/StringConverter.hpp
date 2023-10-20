@@ -5,6 +5,7 @@
 #include <boost/lexical_cast.hpp>
 
 
+
 namespace StringConverter
 {
 	template <class T>
