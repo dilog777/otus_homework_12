@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 	mapReducer.setMapFunctor([&length](const std::string &str) { return str.substr(0, length); });
 	mapReducer.setReduceFunctor([](const std::vector<std::string> &strings) { return DuplicateSearcer::duplicates(strings); });
 
-	auto stringShorterLength = [&length](const std::string &str){ return (str.length() < length); };
+	auto stringShorterLength = [&length](const std::string &str){ return (str.length() < static_cast<size_t>(length)); };
 
 	while (length < INT_MAX)
 	{
